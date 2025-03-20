@@ -1,0 +1,39 @@
+# `duti` Settings File
+
+# duti documentation https://duti.org/documentation.html
+# example: https://gist.github.com/apfelchips/0073cb3e8d186115f590d318998c1025
+# see also: https://github.com/Lord-Kamina/SwiftDefaultApps#readme
+#
+# List of MIME Types:
+# IANA: https://www.iana.org/assignments/media-types/media-types.xhtml
+# MDN: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types
+# Unofficial: https://www.sitepoint.com/mime-types-complete-list/
+#
+# Uniform Type Identifier: https://en.wikipedia.org/wiki/Uniform_Type_Identifier#UTI_structure
+# Apple provides many UTIs with Mac OS X, but developers are free to define their own, as long as the UTI is unique to that document type
+#
+# file association .plist: ~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist
+#
+# Show UTI of an extension: `duti -e <.ext>` or `mdls -name kMDItemContentType -name kMDItemContentTypeTree -name kMDItemKind <file> `
+#
+# available Roles:
+# all:    app handles all roles for the given UTI.
+# viewer: app handles reading and displaying documents
+# editor: app can manipulate and save the item. (implies viewer)
+# shell:  app can execute the item.
+# none    app cannot open the item, but provides an icon for the given UTI.
+#
+# Application Bundle Identifier aka. bundle_id aka. app_id
+# get the bundle_id use of an Application: osascript -e 'id of app "Finder.app"'
+#
+# Adding manually:
+# echo 'com.sublimetext.4 yaml    editor' | duti
+
+# bundle id		UTI/ext/MIME type	role
+
+# Data Files
+com.sublimetext.4 yml     editor
+com.sublimetext.4 yaml    editor
+com.sublimetext.4 ini     editor
+com.sublimetext.4 toml    editor
+com.sublimetext.4 json    editor
