@@ -40,6 +40,8 @@ cask "insomnia"
 cask "obsidian"
 cask "deckset"
 cask "quitter"
+cask "discord"
+cask "pycharm-ce"
 
 # always upgrade auto-updated or unversioned cask to latest version even if already installed
 cask "google-chrome", greedy: true
