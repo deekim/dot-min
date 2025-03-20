@@ -1,0 +1,20 @@
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Github Codespaces
+pythonenv3.8
+.factorypath
+.venv/
+
+# [direnv/direnv](https://github.com/direnv/direnv)
+.envrc
+
+# Python
+
+## [pyenv/pyenv](https://github.com/pyenv/pyenv)
+.python-version
