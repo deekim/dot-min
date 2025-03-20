@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+# Mac OS X configuration
+#
+# Reference: https://macos-defaults.com/
+
+# Warn that some commands will not be run if the script is not run as root.
+if [[ $EUID -ne 0 ]]; then
+  RUN_AS_ROOT=false
+  printf "Certain commands will not be run without sudo privileges. To run as root, run the same command prepended with 'sudo', for example: $ sudo $0\n\n" | fold -s -w 80
+else
+  RUN_AS_ROOT=true
+  # Update existing `sudo` timestamp until `.osx` has finished
+  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+fi
+
+###############################################################################
+# General UI/UX                                                               #
+###############################################################################
+
+# Restart automatically if the computer freezes
+if [[ "$RUN_AS_ROOT" = true ]]; then
+  systemsetup -setrestartfreeze on
+fi
+
+# Disable smart quotes
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# Disable smart dashes
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# disable natural scrolling
+defaults write -g com.apple.swipescrolldirection -bool false
+
+# enable right click
+defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode TwoButton
+
+###############################################################################
+# Finder                                                                      #
+###############################################################################
+
+# make Finder quitable
+defaults write com.apple.finder QuitMenuItem -bool true
+
+###############################################################################
+# Dock                                                                        #
+###############################################################################
+
+defaults write com.apple.dock orientation right
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock no-bouncing -bool true
+defaults write com.apple.dock autohide-delay -float 0.0001
+defaults write com.apple.dock showhidden -bool true
+defaults write com.apple.dock static-only -bool false
+defaults write com.apple.dock mineffect -string 'scale'
+defaults write com.apple.dock minimize-to-application -bool true
+defaults write com.apple.dock size-immutable -bool true
+defaults write com.apple.dock launchanim -bool false
+
+###############################################################################
+# Desktop                                                                     #
+###############################################################################
+
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
+
+###############################################################################
+# Hot Corners (disable)                                                       #
+###############################################################################
+
+defaults write com.apple.dock wvous-tr-corner -int 0
+defaults write com.apple.dock wvous-tl-corner -int 0
+defaults write com.apple.dock wvous-bl-corner -int 0
+defaults write com.apple.dock wvous-br-corner -int 0
+
+###############################################################################
+# Kill/restart affected applications                                          #
+###############################################################################
+
+# Restart affected applications if `--no-restart` flag is not present.
+if [[ ! ($* == *--no-restart*) ]]; then
+  for app in "cfprefsd" "Dock" "Finder" "Mail" "SystemUIServer" "Terminal"; do
+    killall "${app}" > /dev/null 2>&1
+  done
+fi
+
+printf "Please log out and log back in to make all settings take effect.\n"
