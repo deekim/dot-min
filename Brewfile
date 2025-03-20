@@ -16,8 +16,7 @@ brew "pyenv-virtualenv"
 brew "jq"
 
 brew "mysql@8.4", restart_service: :changed, link: true, conflicts_with: ["mysql"]
-brew "postgresql@16",
-     postinstall: "${HOMEBREW_PREFIX}/opt/postgresql@16/bin/postgres -D ${HOMEBREW_PREFIX}/var/postgresql@16"
+brew "postgresql@16"
 
 # install only on specified OS
 brew "gnupg" if OS.mac?
