@@ -15,7 +15,7 @@ brew "pyenv"
 brew "pyenv-virtualenv"
 brew "jq"
 
-brew "mysql@5.6", restart_service: :changed, link: true, conflicts_with: ["mysql"]
+brew "mysql@8.4", restart_service: :changed, link: true, conflicts_with: ["mysql"]
 brew "postgresql@16",
      postinstall: "${HOMEBREW_PREFIX}/opt/postgresql@16/bin/postgres -D ${HOMEBREW_PREFIX}/var/postgresql@16"
 
