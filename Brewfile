@@ -35,20 +35,13 @@ cask "ticktick"
 cask "insomnia"
 cask "obsidian"
 cask "deckset"
-cask "quitter"
+# cask "quitter" (checksum)
 cask "discord"
 cask "pycharm-ce"
 cask "chatgpt"
 
 # always upgrade auto-updated or unversioned cask to latest version even if already installed
-cask "google-chrome", greedy: true
-
-# 'brew install --cask' only if '/usr/libexec/java_home --failfast' fails
-cask "java" unless system "/usr/libexec/java_home", "--failfast"
-
-
-# 'whalebrew install'
-whalebrew "whalebrew/wget"
+# cask "google-chrome", greedy: true (checksum)
 
 # 'vscode --install-extension'
 vscode "GitHub.codespaces"
