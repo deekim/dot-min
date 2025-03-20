@@ -1,0 +1,181 @@
+[alias]
+  wip = !git add . && git commit -am "wip"
+
+  dm = !git diff main 2> /dev/null || git diff master
+
+  as = !git rebase -i --autosquash $(git merge-base master HEAD 2> /dev/null || git merge-base main HEAD)
+  
+  # graph
+  g = !"git log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative --color --date-order"
+
+  co = checkout
+  
+  com = "!f() { git checkout main 2> /dev/null || git checkout master; }; f"
+
+  # branch short name
+  bs = !"git rev-parse --abbrev-ref HEAD"
+  
+  remote-diff = !"git diff origin/$(git bs)"
+  
+  yolo = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
+  
+  # Find the common ancestor of HEAD and master and show a diff
+  # from that to HEAD
+  dm = "!git diff $(git merge-base master HEAD)"
+  
+  # rebase master (interactive) with autosquash
+  rbm = !"git rebase master -i --autosquash"
+
+  # View abbreviated SHA, description, and history graph of the latest 20 commits
+  l = log --pretty=oneline -n 20 --graph --abbrev-commit
+
+  # View the current working tree status using the short format
+  s = status -s
+
+  # Show the diff between the latest commit and the current state
+  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+  # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+  # Switch to a branch, creating it if necessary
+  go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
+  # List aliases
+  aliases = config --get-regexp alias
+
+  # Amend the currently staged files to the latest commit
+  amend = commit --amend --reuse-message=HEAD
+
+  # Author on the latest commit
+  blame = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+  # Find branches containing commit
+  fb = "!f() { git branch -a --contains $1; }; f"
+
+  # Find tags containing commit
+  ft = "!f() { git describe --always --contains $1; }; f"
+
+  # Find commits by source code
+  fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+  # Find commits by commit message
+  fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+
+  # Remove branches that have already been merged
+  # a.k.a. 'delete merged'
+  # dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+  prune-merged = !git branch --merged | egrep -v \"(^\\*|master|main|dev)\" | xargs git branch -d
+
+  # List contributors with number of commits
+  contributors = shortlog --summary --numbered
+  
+  # Generate .gitignore file
+  ignore = "!f() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; f"
+  
+  # Set Upstream
+  su = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
+  
+  # Root git directory
+  root = rev-parse --show-toplevel
+  
+  # Exec at root git directory
+  exec = "!exec "
+
+[gui]
+  gcwarning = false
+
+[apply]
+  # Detect whitespace errors when applying a patch
+  whitespace = fix
+
+[core]
+  # Use custom `.gitignore` and `.gitattributes`
+  excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+
+  # Treat spaces before tabs and all kinds of trailing whitespace as an error
+  # [default] trailing-space: looks for spaces at the end of a line
+  # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+  # Make `git rebase` safer on macOS
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime = false
+
+  pager = diff-so-fancy | less --tabs=4 -RFX
+
+[color]
+  # Use colors in Git commands that are capable of colored output when
+  # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+  ui = true
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+  meta = 11
+  frag = magenta
+  old = red
+  new = green
+  func = 146
+  commit = yellow
+  whitespace = red reverse
+
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[diff]
+  # Detect copies as well as renames
+  renames = copies
+  # Enable an experimental heuristic that shifts the hunk boundary in an
+  # attempt to make the resulting patch easier to read.
+  indentHeuristic = true
+
+[fetch]
+  prune = true
+
+[help]
+  # Automatically correct and execute mistyped commands
+  autocorrect = 1
+
+[merge]
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+  tool = smerge
+
+[push]
+  default = current
+
+[pull]
+  rebase = true
+
+[rerere]
+  enabled = 1
+  autoupdate = 1
+
+[interactive]
+	diffFilter = diff-so-fancy --patch
+
+[color "diff-highlight"]
+	oldNormal = red
+	oldHighlight = red 52
+	newNormal = green
+	newHighlight = green 22
+
+[diff-so-fancy]
+	markEmptyLines = false
+	changeHunkIndicators = false
+	stripLeadingSymbols = false
+	useUnicodeRuler = false
+	rulerWidth = 47
+
+[mergetool]
+	keepBackup = false
+
+[advice]
+	skippedCherryPicks = false
