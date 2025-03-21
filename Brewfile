@@ -14,6 +14,7 @@ brew "the_silver_searcher"
 brew "pyenv"
 brew "pyenv-virtualenv"
 brew "jq"
+brew "gh"
 
 brew "mysql@8.4", restart_service: :changed, link: true, conflicts_with: ["mysql"]
 brew "postgresql@16"
