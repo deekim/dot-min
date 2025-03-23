@@ -46,6 +46,7 @@ defaults write com.apple.finder QuitMenuItem -bool true
 # Dock                                                                        #
 ###############################################################################
 
+defaults write com.apple.dock persistent-apps -array ""
 defaults write com.apple.dock orientation right
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock no-bouncing -bool true
