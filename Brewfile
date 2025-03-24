@@ -36,13 +36,11 @@ cask "ticktick"
 cask "insomnia"
 cask "obsidian"
 cask "deckset"
-# cask "quitter" (checksum)
+cask "quitter", args: { require_sha: false }
 cask "discord"
 cask "pycharm-ce"
 cask "chatgpt"
-
-# always upgrade auto-updated or unversioned cask to latest version even if already installed
-# cask "google-chrome", greedy: true (checksum)
+cask "google-chrome", args: { require_sha: false }
 
 # 'vscode --install-extension'
 vscode "GitHub.codespaces"
